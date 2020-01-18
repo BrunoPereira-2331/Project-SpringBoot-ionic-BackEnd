@@ -9,7 +9,7 @@ import com.bruno.projectMc.domain.Category;
 import com.bruno.projectMc.repositories.CategoryRepository;
 
 @Service
-public class CategoryService {
+public class CategoryService{
 
 	@Autowired
 	private CategoryRepository repo;
