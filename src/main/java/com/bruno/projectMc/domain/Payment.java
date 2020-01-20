@@ -11,7 +11,6 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.bruno.projectMc.domain.enums.PaymentState;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

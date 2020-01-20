@@ -32,7 +32,7 @@ import com.bruno.projectMc.repositories.ProductRepository;
 import com.bruno.projectMc.repositories.StateRepository;
 
 @SpringBootApplication
-public class ProjectMcApplication implements CommandLineRunner {
+public class ProjectSpringBootApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoryRepository catRepository;
@@ -62,7 +62,7 @@ public class ProjectMcApplication implements CommandLineRunner {
 	private OrderItemRepository orderItemRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProjectMcApplication.class, args);
+		SpringApplication.run(ProjectSpringBootApplication.class, args);
 	}
 
 	@Override

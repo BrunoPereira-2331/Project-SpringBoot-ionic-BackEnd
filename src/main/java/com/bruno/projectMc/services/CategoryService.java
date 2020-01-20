@@ -10,14 +10,20 @@ import com.bruno.projectMc.repositories.CategoryRepository;
 import com.bruno.projectMc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoryService{
+public class CategoryService {
 
 	@Autowired
 	private CategoryRepository repo;
-	
+
 	public Category find(Integer id) {
 		Optional<Category> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-		"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
-		}
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
+	}
+
+	public Category Insert(Category obj) {
+		obj.setId(null);
+		return repo.save(obj);
+
+	}
 }
