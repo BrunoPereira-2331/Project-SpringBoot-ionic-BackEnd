@@ -5,13 +5,17 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.bruno.projectMc.domain.enums.PaymentState;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class PaymentBankSlip extends Payment {
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date expirationDate;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date paymentDate;
 
 	public PaymentBankSlip() {
