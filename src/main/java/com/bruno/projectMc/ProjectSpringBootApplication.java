@@ -67,8 +67,13 @@ public class ProjectSpringBootApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Category cat1 = new Category(null, "informatica");
-		Category cat2 = new Category(null, "escritorio");
+		Category cat1 = new Category(null, "Informatica");
+		Category cat2 = new Category(null, "Escritorio");
+		Category cat3 = new Category(null, "Cama mesa e banho");
+		Category cat4 = new Category(null, "Eletronicos");
+		Category cat5 = new Category(null, "Jardinagem");
+		Category cat6 = new Category(null, "Decoração");
+		Category cat7 = new Category(null, "Perfumaria");
 
 		Product product1 = new Product(null, "computador", 2000.00);
 		Product product2 = new Product(null, "impressora", 800.00);
@@ -81,7 +86,7 @@ public class ProjectSpringBootApplication implements CommandLineRunner {
 		product2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		product3.getCategories().addAll(Arrays.asList(cat1));
 
-		catRepository.saveAll(Arrays.asList(cat1, cat2));
+		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		prodRepository.saveAll(Arrays.asList(product1, product2, product3));
 
 		State state1 = new State(null, "Minas Gerais");
