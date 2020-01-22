@@ -1,5 +1,6 @@
 package com.bruno.projectMc.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bruno.projectMc.domain.Client;
 import com.bruno.projectMc.dto.ClientDTO;
+import com.bruno.projectMc.dto.ClientNewDTO;
 import com.bruno.projectMc.services.ClientService;
 
 @RestController
@@ -30,6 +33,15 @@ public class ClientResource {
 	public ResponseEntity<Client> find(@PathVariable Integer id) {
 		Client obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto) {
+		Client obj = service.fromDTO(objDto);
+		obj = service.Insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
