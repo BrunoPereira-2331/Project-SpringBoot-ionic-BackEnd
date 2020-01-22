@@ -2,22 +2,44 @@ package com.bruno.projectMc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.bruno.projectMc.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=2, max=120, message="O tamanho deve ser entre 2 e 120 caracteres")
 	private String name;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email invalido")
 	private String email;
-	private String cpfOrCnpj;
-	private Integer type;
 
+	@NotEmpty(message="Preenchimento obrigatório")
+	private String cpfOrCnpj;
+
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
+
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String number;
-	private String complement;
-	private String neighborhood;
+
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String zipCode;
 
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String phone1;
+	
+	private Integer type;
+	private String complement;
+	private String neighborhood;
 	private String phone2;
 	private String phone3;
 
