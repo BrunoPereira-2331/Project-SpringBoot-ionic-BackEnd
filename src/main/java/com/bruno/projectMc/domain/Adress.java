@@ -24,7 +24,7 @@ public class Adress implements Serializable{
 	private String number;
 	private String complement;
 	private String neighborhood;
-	private String zipCode;
+	private String postalCode;
 
 	@JsonIgnore
 	@ManyToOne
@@ -45,7 +45,7 @@ public class Adress implements Serializable{
 		this.number = number;
 		this.complement = complement;
 		this.neighborhood = neighborhood;
-		this.zipCode = zipCode;
+		this.postalCode = zipCode;
 		this.client = client;
 		this.setCity(city);
 	}
@@ -90,12 +90,12 @@ public class Adress implements Serializable{
 		this.neighborhood = neighborhood;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setPostalCode(String zipCode) {
+		this.postalCode = zipCode;
 	}
 
 	public Client getClient() {
