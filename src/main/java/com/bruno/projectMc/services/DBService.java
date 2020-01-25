@@ -32,7 +32,7 @@ import com.bruno.projectMc.repositories.StateRepository;
 
 @Service
 public class DBService {
-	
+
 	@Autowired
 	private CategoryRepository catRepository;
 
@@ -50,13 +50,13 @@ public class DBService {
 
 	@Autowired
 	private AdressRepository adressRepository;
-	
+
 	@Autowired
 	private OrderRepository orderRepository;
-	
+
 	@Autowired
 	private PaymentRepository paymentRepository;
-	
+
 	@Autowired
 	private OrderItemRepository orderItemRepository;
 
@@ -106,7 +106,8 @@ public class DBService {
 		product3.getCategories().addAll(Arrays.asList(cat1));
 
 		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		prodRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5, product6, product7, product8, product9, product10, product11));
+		prodRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5, product6, product7,
+				product8, product9, product10, product11));
 
 		State state1 = new State(null, "Minas Gerais");
 		State state2 = new State(null, "São Paulo");
@@ -122,43 +123,44 @@ public class DBService {
 
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
-		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PESSOAFISICA);
+		Client cli1 = new Client(null, "Maria Silva", "email", "36378912377",
+				ClientType.PESSOAFISICA);
 
 		cli1.getPhones().addAll(Arrays.asList("21334261", "99328452"));
 		Adress adress = new Adress(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, city1);
 		Adress adress1 = new Adress(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, city2);
 
 		cli1.getAdresses().addAll(Arrays.asList(adress, adress1));
-		
+
 		cliRepository.saveAll(Arrays.asList(cli1));
 		adressRepository.saveAll(Arrays.asList(adress, adress1));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, adress);
 		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, adress1);
-		
+
 		Payment pay1 = new PaymentCreditCard(null, PaymentState.QUITADO, order1, 6);
 		order1.setPayment(pay1);
-	
-		Payment pay2 = new PaymentBankSlip(null, PaymentState.PENDENTE, order2 , sdf.parse("20/10/2017 00:00"), null);
+
+		Payment pay2 = new PaymentBankSlip(null, PaymentState.PENDENTE, order2, sdf.parse("20/10/2017 00:00"), null);
 		order2.setPayment(pay2);
 		cli1.getOrders().addAll(Arrays.asList(order1, order2));
-		
+
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
-	
+
 		OrderItem orderItem1 = new OrderItem(order1, product1, 0.0, 1, product1.getPrice());
 		OrderItem orderItem2 = new OrderItem(order1, product3, 0.0, 2, product3.getPrice());
-		OrderItem orderItem3 = new OrderItem(order2, product2 , 100.0, 1, product2.getPrice());
-		
+		OrderItem orderItem3 = new OrderItem(order2, product2, 100.0, 1, product2.getPrice());
+
 		order1.getItems().addAll(Arrays.asList(orderItem1, orderItem2));
 		order1.getItems().addAll(Arrays.asList(orderItem3));
-		
+
 		product1.getItems().addAll(Arrays.asList(orderItem1));
 		product2.getItems().addAll(Arrays.asList(orderItem3));
 		product3.getItems().addAll(Arrays.asList(orderItem2));
-		
+
 		orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
-		
+
 	}
 }
