@@ -30,12 +30,15 @@ public class OrderService {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private ClientService clientService;
 
 	@Autowired
 	private OrderItemRepository orderItemRepo;
+
+	@Autowired
+	private EmailService emailService;
 
 	public Order find(Integer id) {
 		Optional<Order> obj = repo.findById(id);
@@ -63,7 +66,7 @@ public class OrderService {
 			oi.setOrder(obj);
 		}
 		orderItemRepo.saveAll(obj.getItems());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
