@@ -20,20 +20,23 @@ import com.bruno.projectMc.domain.enums.ClientType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Client implements Serializable{
+public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String name;
-	
+
 	@Column(unique = true)
 	private String email;
 	private String cpfOrCnpj;
 	private Integer type;
+
+	@JsonIgnore
+	private String password;
 
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Adress> adresses = new ArrayList<>();
@@ -43,19 +46,21 @@ public class Client implements Serializable{
 	private Set<String> phones = new HashSet<>();
 
 	@JsonIgnore
-	@OneToMany(mappedBy= "client")
+	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
+
 	public Client() {
 		super();
 	}
 
-	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType type) {
+	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType type, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
-		this.type = (type==null) ? null : type.getCod();
+		this.type = (type == null) ? null : type.getCod();
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -98,6 +103,14 @@ public class Client implements Serializable{
 		this.type = type.getCod();
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public List<Adress> getAdresses() {
 		return adresses;
 	}
@@ -113,7 +126,7 @@ public class Client implements Serializable{
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
 	}
-	
+
 	public List<Order> getOrders() {
 		return orders;
 	}
