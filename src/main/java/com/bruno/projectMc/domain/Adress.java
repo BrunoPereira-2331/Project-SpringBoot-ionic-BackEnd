@@ -12,14 +12,14 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Adress implements Serializable{
+public class Adress implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private String logradouro;
 	private String number;
 	private String complement;
@@ -28,11 +28,11 @@ public class Adress implements Serializable{
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="client_id")
+	@JoinColumn(name = "client_id")
 	private Client client;
-	
+
 	@ManyToOne
-	@JoinColumn(name="city_id")
+	@JoinColumn(name = "city_id")
 	private City city;
 
 	public Adress() {
@@ -138,6 +138,5 @@ public class Adress implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

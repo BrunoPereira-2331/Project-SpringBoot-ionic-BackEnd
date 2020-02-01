@@ -21,6 +21,7 @@ import com.bruno.projectMc.domain.Product;
 import com.bruno.projectMc.domain.State;
 import com.bruno.projectMc.domain.enums.ClientType;
 import com.bruno.projectMc.domain.enums.PaymentState;
+import com.bruno.projectMc.domain.enums.Profile;
 import com.bruno.projectMc.repositories.AdressRepository;
 import com.bruno.projectMc.repositories.CategoryRepository;
 import com.bruno.projectMc.repositories.CityRepository;
@@ -127,16 +128,23 @@ public class DBService {
 
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
-		Client cli1 = new Client(null, "Maria Silva", "brunopereira.19@hotmail.com", "36378912377", ClientType.PESSOAFISICA, pe.encode("123"));
-
+		Client cli1 = new Client(null, "bruno Silva", "brunopereira.19@hotmail.com", "36378912377", ClientType.PESSOAFISICA, pe.encode("123"));
 		cli1.getPhones().addAll(Arrays.asList("21334261", "99328452"));
+		
+		Client cli2 = new Client(null, "Mario Red", "mario@hotmail.com", "42047591066", ClientType.PESSOAFISICA, pe.encode("123"));
+		cli2.getPhones().addAll(Arrays.asList("989465426", "988744652"));
+		cli2.addProfile(Profile.ADMIN);
+		
 		Adress adress = new Adress(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, city1);
 		Adress adress1 = new Adress(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, city2);
-
+		Adress adress3 = new Adress(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, city2);
+		
 		cli1.getAdresses().addAll(Arrays.asList(adress, adress1));
-
-		cliRepository.saveAll(Arrays.asList(cli1));
-		adressRepository.saveAll(Arrays.asList(adress, adress1));
+		cli2.getAdresses().addAll(Arrays.asList(adress3));
+		
+		
+		cliRepository.saveAll(Arrays.asList(cli1, cli2));
+		adressRepository.saveAll(Arrays.asList(adress, adress1, adress3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, adress);
