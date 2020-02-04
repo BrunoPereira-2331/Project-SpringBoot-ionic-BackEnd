@@ -9,6 +9,9 @@
  import org.springframework.mail.SimpleMailMessage;
  import org.springframework.mail.javamail.JavaMailSender;
 
+import com.bruno.projectMc.domain.Client;
+import com.bruno.projectMc.domain.Order;
+
 
 public class SmptEmailService extends AbstractEmailService{
 
@@ -33,6 +36,12 @@ public class SmptEmailService extends AbstractEmailService{
 		LOG.info("Enviando email...");
 		javaMailSender.send(msg);
 		LOG.info("Email enviado");
+		
+	}
+
+	@Override
+	public void sendOrderConfirmationHtmlEmail(Order order) {
+		// TODO Auto-generated method stub
 		
 	}
 	

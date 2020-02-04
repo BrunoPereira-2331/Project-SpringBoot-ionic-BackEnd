@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.bruno.projectMc.domain.Client;
+import com.bruno.projectMc.domain.Order;
+
 public class MockEmailService extends AbstractEmailService{
 
 	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
@@ -25,4 +28,9 @@ public class MockEmailService extends AbstractEmailService{
 		
 	}
 
+	@Override
+	public void sendOrderConfirmationHtmlEmail(Order order) {
+		// TODO Auto-generated method stub
+		
+	}
 }
