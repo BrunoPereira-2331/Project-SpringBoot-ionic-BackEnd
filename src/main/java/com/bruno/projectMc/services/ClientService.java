@@ -16,10 +16,13 @@ import com.bruno.projectMc.domain.Adress;
 import com.bruno.projectMc.domain.City;
 import com.bruno.projectMc.domain.Client;
 import com.bruno.projectMc.domain.enums.ClientType;
+import com.bruno.projectMc.domain.enums.Profile;
 import com.bruno.projectMc.dto.ClientDTO;
 import com.bruno.projectMc.dto.ClientNewDTO;
 import com.bruno.projectMc.repositories.AdressRepository;
 import com.bruno.projectMc.repositories.ClientRepository;
+import com.bruno.projectMc.security.UserSS;
+import com.bruno.projectMc.services.exceptions.AuthorizationException;
 import com.bruno.projectMc.services.exceptions.DataIntegrityException;
 import com.bruno.projectMc.services.exceptions.ObjectNotFoundException;
 
@@ -28,21 +31,24 @@ public class ClientService {
 
 	@Autowired
 	private BCryptPasswordEncoder pe;
-	
-	
+
 	@Autowired
 	private ClientRepository repo;
-	
+
 	@Autowired
 	private AdressRepository repoAdress;
-	
 
 	public Client find(Integer id) {
+		UserSS user = UserService.authenticated();
+
+		if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
 	}
-	
+
 	@Transactional
 	public Client Insert(Client obj) {
 		obj.setId(null);
@@ -78,11 +84,13 @@ public class ClientService {
 	public Client fromDTO(ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null, null);
 	}
-	
+
 	public Client fromDTO(ClientNewDTO objDto) {
-		Client cli = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOrCnpj(), ClientType.toEnum(objDto.getType()), pe.encode(objDto.getPassword()));
+		Client cli = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOrCnpj(),
+				ClientType.toEnum(objDto.getType()), pe.encode(objDto.getPassword()));
 		City city = new City(objDto.getCityId(), null, null);
-		Adress adress = new Adress(null, objDto.getLogradouro(), objDto.getNumber(), objDto.getComplement(), objDto.getNeighborhood(), objDto.getZipCode(), cli, city);
+		Adress adress = new Adress(null, objDto.getLogradouro(), objDto.getNumber(), objDto.getComplement(),
+				objDto.getNeighborhood(), objDto.getZipCode(), cli, city);
 		cli.getAdresses().add(adress);
 		cli.getPhones().add(objDto.getPhone1());
 		if (objDto.getPhone2() != null) {
@@ -93,10 +101,9 @@ public class ClientService {
 		}
 		return cli;
 	}
-	
+
 	private void updateData(Client newObj, Client obj) {
 		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
 	}
 }
- 
