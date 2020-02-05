@@ -51,10 +51,12 @@ public class Client implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "profiles")
 	private Set<Integer> profiles = new HashSet<>();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
+
+	private String imgUrl;
 
 	public Client() {
 		addProfile(Profile.CLIENT);
@@ -117,11 +119,11 @@ public class Client implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Set<Profile> getProfiles() {
 		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
 	}
-	
+
 	public void addProfile(Profile profile) {
 		profiles.add(profile.getCod());
 	}
@@ -150,6 +152,14 @@ public class Client implements Serializable {
 		this.orders = orders;
 	}
 
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,4 +184,5 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
+
 }
