@@ -18,6 +18,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.bruno.projectMc.services.exceptions.FileException;
 
 @Service
 public class S3Service {
@@ -37,7 +38,7 @@ public class S3Service {
 			String contentType = multiPartFile.getContentType();
 			return uploadFile(is, fileName, contentType);
 		} catch (IOException e) {
-			throw new RuntimeException("IO ERROR: " + e.getMessage());
+			throw new FileException("IO Error: " + e.getMessage());
 		}
 
 	}
